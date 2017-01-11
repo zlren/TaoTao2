@@ -5,7 +5,8 @@
 <configuration>
 
 	<plugins>
-		<!-- 配置分页助手 -->
+
+		<!-- 配置分页助手（配置在通用mapper的前面） -->
 		<plugin interceptor="com.github.pagehelper.PageHelper">
 			<property name="dialect" value="mysql" />
 			<!-- 设置为true时，使用RowBounds分页会进行count查询 -->
