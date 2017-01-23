@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
+/**Page跳转
  * Created by zlren on 2017/1/10.
  */
 @RequestMapping("page")
