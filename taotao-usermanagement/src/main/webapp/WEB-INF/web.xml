@@ -30,6 +30,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--put请求无法提交表单数据，添加过滤器解决-->
     <filter>
         <filter-name>HttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
