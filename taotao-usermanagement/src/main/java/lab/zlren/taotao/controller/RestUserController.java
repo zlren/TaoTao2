@@ -70,7 +70,6 @@ public class RestUserController {
 
     /**
      * 更新用户资源
-     * 
      * @param user
      * @return
      */
