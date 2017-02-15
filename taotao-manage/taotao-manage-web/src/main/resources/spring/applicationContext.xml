@@ -22,7 +22,7 @@
 		<!--</property>-->
 	<!--</bean>-->
 
-	<context:property-placeholder location="classpath:jdbc.properties" />
+	<context:property-placeholder location="classpath:jdbc.properties,classpath:env.properties" />
 	
 	<!-- 扫描包 -->
 	<context:component-scan base-package="lab.zlren.taotao"/>
