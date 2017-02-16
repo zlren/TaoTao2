@@ -33,7 +33,8 @@ public class ItemController {
     private ItemDescService itemDescService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> saveItem(Item item, @RequestParam("desc") String desc) {
+    public ResponseEntity<Void> saveItem(Item item, @RequestParam("desc") String desc,
+                                         @RequestParam("itemParams") String itemParams) {
 
         try {
 
@@ -46,7 +47,7 @@ public class ItemController {
             }
 
 
-            this.itemService.saveItem(item, desc); // save之后id就有了
+            this.itemService.saveItem(item, desc, itemParams); // save之后id就有了
 
             // 状态发生变化
             LOGGER.info("新增商品成功! itemId = {}", item.getId());
@@ -85,7 +86,46 @@ public class ItemController {
             e.printStackTrace();
         }
 
+        // todo todo的功能很酷啊
+
         // 出错 500
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+    /**
+     * 修改商品信息
+     * @param item
+     * @param desc
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateItem(Item item, @RequestParam("desc") String desc,
+                                           @RequestParam("itemParams") String itemParams) {
+
+        try {
+
+            // 入参处输出日志
+            LOGGER.info("修改商品! item = {}, desc = {}", item, desc);
+
+            if (StringUtils.isEmpty(item.getTitle())) {
+                // 响应400
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+
+            // 修改商品
+            this.itemService.updateItem(item, desc, itemParams); // save之后id就有了
+
+            // 状态发生变化
+            LOGGER.info("修改商品成功! itemId = {}", item.getId());
+
+            // 成功 204
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("修改商品失败! title = " + item.getTitle() + ", cid = " + item.getCid(), e);
+        }
+
+        // 出错 500
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }
