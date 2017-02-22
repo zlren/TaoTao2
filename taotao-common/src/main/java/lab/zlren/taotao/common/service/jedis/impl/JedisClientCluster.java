@@ -1,6 +1,6 @@
-package lab.zlren.taotao.manage.service.jedis.impl;
+package lab.zlren.taotao.common.service.jedis.impl;
 
-import lab.zlren.taotao.manage.service.jedis.JedisClient;
+import lab.zlren.taotao.common.service.jedis.JedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.JedisCluster;
 

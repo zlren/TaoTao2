@@ -15,8 +15,6 @@
 	<artifactId>taotao2-web</artifactId>
 
 	<dependencies>
-<<<<<<< HEAD
-=======
 
 		<dependency>
 			<groupId>lab.zlren</groupId>
@@ -24,17 +22,13 @@
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
->>>>>>> 22629c4986cfdc4b157c9da206e092ecb0c507ab
+
 		<dependency>
 			<groupId>lab.zlren</groupId>
 			<artifactId>taotao2-manage-pojo</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 22629c4986cfdc4b157c9da206e092ecb0c507ab
 		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -93,6 +87,14 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
+
+		<!--redis-->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

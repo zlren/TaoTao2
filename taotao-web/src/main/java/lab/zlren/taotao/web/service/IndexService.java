@@ -2,8 +2,9 @@ package lab.zlren.taotao.web.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lab.zlren.taotao.common.bean.EasyUIResult;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import lab.zlren.taotao.common.bean.EasyUIResult;
+import lab.zlren.taotao.common.service.httpclient.ApiService;
 import lab.zlren.taotao.manage.pojo.Content;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * IndexService

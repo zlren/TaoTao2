@@ -1,4 +1,4 @@
-package lab.zlren.taotao.web.httpclient;
+package lab.zlren.taotao.common.service.httpclient;
 
 /**
  * HttpResult

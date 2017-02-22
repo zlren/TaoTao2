@@ -3,6 +3,7 @@ package lab.zlren.taotao.manage.service;
 import com.github.abel533.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lab.zlren.taotao.common.service.httpclient.ApiService;
 import lab.zlren.taotao.manage.mapper.ItemMapper;
 import lab.zlren.taotao.manage.pojo.Item;
 import lab.zlren.taotao.manage.pojo.ItemDesc;
@@ -10,6 +11,7 @@ import lab.zlren.taotao.manage.pojo.ItemParamItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,6 +29,9 @@ public class ItemService extends BaseService<Item> {
 
     @Autowired
     private ItemParamItemService itemParamItemService;
+
+    @Autowired
+    private ApiService apiService;
 
     /**
      * saveItem新增商品，将存储item和itemdesc合成一个事务
@@ -90,5 +95,13 @@ public class ItemService extends BaseService<Item> {
         // 修改商品规格参数数据
         this.itemParamItemService.updateItemParamItem(item.getId(), itemParams);
 
+        // 通知其他系统该商品已经更新，删除其他系统的缓存
+        // 目前只通知前台系统
+        try {
+            String url = "http://www.taotao.com:8002/item/cache/" + item.getId() + ".html";
+            this.apiService.doPost(url, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

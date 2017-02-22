@@ -1,4 +1,4 @@
-package lab.zlren.taotao.manage.service.jedis;
+package lab.zlren.taotao.common.service.jedis;
 
 /**
  * Created by zlren on 2017/2/21.

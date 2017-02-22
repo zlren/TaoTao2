@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lab.zlren.taotao.common.bean.ItemCatData;
 import lab.zlren.taotao.common.bean.ItemCatResult;
+import lab.zlren.taotao.common.service.jedis.RedisService;
 import lab.zlren.taotao.manage.pojo.ItemCat;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

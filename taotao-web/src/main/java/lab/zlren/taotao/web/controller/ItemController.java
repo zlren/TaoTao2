@@ -1,6 +1,7 @@
 package lab.zlren.taotao.web.controller;
 
-import lab.zlren.taotao.manage.pojo.Item;
+import lab.zlren.taotao.manage.pojo.ItemDesc;
+import lab.zlren.taotao.web.bean.Item;
 import lab.zlren.taotao.web.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,28 @@ public class ItemController {
     private ItemService itemService;
 
 
+    /**
+     * 显示商品详情页
+     *
+     * @param itemId
+     * @return
+     */
     @RequestMapping(value = "{itemId}", method = RequestMethod.GET)
     public ModelAndView showDetail(@PathVariable("itemId") Long itemId) {
         ModelAndView modelAndView = new ModelAndView("item");
 
+        // 基本数据
         Item item = this.itemService.queryItemById(itemId);
-        modelAndView.addObject("item", item)
+        modelAndView.addObject("item", item);
+
+        // 描述数据
+        ItemDesc itemDesc = this.itemService.queryItemDescByItemId(itemId);
+        modelAndView.addObject("itemDesc", itemDesc);
+
+        // 规格参数
+        String itemParam = this.itemService.queryItemParamByItemId(itemId);
+        modelAndView.addObject("itemParam", itemParam);
+
         return modelAndView;
     }
 }

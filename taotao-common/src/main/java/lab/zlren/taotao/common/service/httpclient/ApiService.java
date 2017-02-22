@@ -1,6 +1,5 @@
-package lab.zlren.taotao.web.service;
+package lab.zlren.taotao.common.service.httpclient;
 
-import lab.zlren.taotao.web.httpclient.HttpResult;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
@@ -34,7 +33,7 @@ public class ApiService implements BeanFactoryAware {
 
     private BeanFactory beanFactory;
 
-    @Autowired
+    @Autowired(required = false)
     private RequestConfig requestConfig;
 
     /**

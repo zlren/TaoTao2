@@ -1,6 +1,6 @@
-package lab.zlren.taotao.manage.service.jedis.impl;
+package lab.zlren.taotao.common.service.jedis.impl;
 
-import lab.zlren.taotao.manage.service.jedis.JedisClient;
+import lab.zlren.taotao.common.service.jedis.JedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPool;
  */
 public class JedisClientSingle implements JedisClient {
 
-    @Autowired
+    @Autowired(required = false) // 保证common的通用性，使用它的那个spirng容器如果有就注入，没有就忽略了
     private JedisPool jedisPool;
 
     @Override

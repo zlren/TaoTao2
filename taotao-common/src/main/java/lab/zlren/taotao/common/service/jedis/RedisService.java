@@ -1,6 +1,6 @@
-package lab.zlren.taotao.manage.service;
+package lab.zlren.taotao.common.service.jedis;
 
-import lab.zlren.taotao.manage.service.jedis.impl.JedisClientSingle;
+import lab.zlren.taotao.common.service.jedis.impl.JedisClientSingle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +14,20 @@ public class RedisService {
     @Autowired
     private JedisClientSingle jedisClient;
 
-    String get(String key) {
+    public String get(String key) {
         return jedisClient.get(key);
     }
 
 
-    String set(String key, String value) {
+    public String set(String key, String value) {
         return jedisClient.set(key, value);
     }
 
-    long expire(String key, int second) {
+    public long expire(String key, int second) {
         return jedisClient.expire(key, second);
     }
 
-    long del(String key) {
+    public long del(String key) {
         return jedisClient.del(key);
     }
 
