@@ -15,6 +15,7 @@ public class IndexController {
 
     /**
      * 跳转到首页
+     *
      * @return
      */
     @RequestMapping(value = "index", method = RequestMethod.GET)

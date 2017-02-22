@@ -1,10 +1,15 @@
 package lab.zlren.taotao.manage.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lab.zlren.taotao.common.bean.ItemCatData;
 import lab.zlren.taotao.common.bean.ItemCatResult;
 import lab.zlren.taotao.manage.pojo.ItemCat;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,13 +22,33 @@ import java.util.Map;
 @Service
 public class ItemCatService extends BaseService<ItemCat> {
 
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    @Autowired
+    private RedisService redisService;
+
     /**
      * 全部查询，并且生成树状结构
      *
      * @return
      */
-    public ItemCatResult queryAllToTree() {
+    public ItemCatResult queryAllToTree() throws JsonProcessingException {
         ItemCatResult result = new ItemCatResult();
+
+        // 先从缓存中命中，命中返回，没有命中程序继续执行
+        String key = "TAOTAO_MANAGE_ITEM_CAT_ALL"; // 最佳实践，项目名_模块名_业务名
+        String cacheData = this.redisService.get(key);
+        if (StringUtils.isNoneEmpty(cacheData)) {
+            // 命中
+
+            try {
+                return OBJECT_MAPPER.readValue(cacheData, ItemCatResult.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         // 全部查出，并且在内存中生成树形结构
         List<ItemCat> cats = super.queryAll();
 
@@ -70,6 +95,12 @@ public class ItemCatService extends BaseService<ItemCat> {
                 break;
             }
         }
+
+
+        // 添加到缓存，将result序列化成json字符串后存储
+        this.redisService.set(key, OBJECT_MAPPER.writeValueAsString(result));
+
+
         return result;
     }
 }
