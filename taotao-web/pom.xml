@@ -15,11 +15,26 @@
 	<artifactId>taotao2-web</artifactId>
 
 	<dependencies>
+<<<<<<< HEAD
+=======
+
+		<dependency>
+			<groupId>lab.zlren</groupId>
+			<artifactId>taotao2-common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+>>>>>>> 22629c4986cfdc4b157c9da206e092ecb0c507ab
 		<dependency>
 			<groupId>lab.zlren</groupId>
 			<artifactId>taotao2-manage-pojo</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 22629c4986cfdc4b157c9da206e092ecb0c507ab
 		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -71,6 +86,12 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-io</artifactId>
+		</dependency>
+
+		<!-- httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
 		</dependency>
 	</dependencies>
 

@@ -41,20 +41,5 @@ public class ApiItemCatController {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-    // @RequestMapping(method = RequestMethod.GET)
-    // public ResponseEntity<String> queryItemCat(@RequestParam("callback") String callback) {
-    //     try {
-    //         ItemCatResult itemCatResult = this.itemCatService.queryAllToTree();
-    //         String json = OBJECT_MAPPER.writeValueAsString(itemCatResult);
-    //         if (StringUtils.isEmpty(callback)) {
-    //             return ResponseEntity.ok(json);
-    //         }
-    //         return ResponseEntity.ok(callback + "(" + json + ");");
-    //
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //
-    //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-    // }
+
 }
