@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisService {
 
-    @Autowired
+    @Autowired(required = false)
     private JedisClientSingle jedisClient;
 
     public String get(String key) {
