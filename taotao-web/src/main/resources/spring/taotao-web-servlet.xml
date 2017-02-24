@@ -22,4 +22,12 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 
+	<!--进入订单系统需要登陆-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/order/**"/>
+			<bean class="lab.zlren.taotao.web.handlerInterceptor.UserLoginHanderInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 </beans>
