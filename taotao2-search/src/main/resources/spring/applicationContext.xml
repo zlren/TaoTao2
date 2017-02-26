@@ -23,7 +23,7 @@
     <!--</bean>-->
 
     <context:property-placeholder
-            location="classpath:env.properties, classpath:httpclient.properties, classpath:solr.properties"/>
+            location="classpath:*.properties"/>
 
     <!-- 扫描包 -->
     <context:component-scan base-package="lab.zlren.taotao"/>

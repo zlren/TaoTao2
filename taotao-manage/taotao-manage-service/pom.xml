@@ -34,6 +34,13 @@
 			<artifactId>jsqlparser</artifactId>
 		</dependency>
 
+		<!--RabbitMQ-->
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+			<version>1.4.0.RELEASE</version>
+		</dependency>
+
 
 
 	</dependencies>

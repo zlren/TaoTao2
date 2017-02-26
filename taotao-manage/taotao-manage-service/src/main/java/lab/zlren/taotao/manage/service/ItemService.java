@@ -1,5 +1,6 @@
 package lab.zlren.taotao.manage.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.abel533.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -8,11 +9,13 @@ import lab.zlren.taotao.manage.mapper.ItemMapper;
 import lab.zlren.taotao.manage.pojo.Item;
 import lab.zlren.taotao.manage.pojo.ItemDesc;
 import lab.zlren.taotao.manage.pojo.ItemParamItem;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ItemService
@@ -33,12 +36,18 @@ public class ItemService extends BaseService<Item> {
     @Autowired
     private ApiService apiService;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     /**
      * saveItem新增商品，将存储item和itemdesc合成一个事务
      * service中使用了service，嵌套，利用了事务的传播特性，两个都成功才算成功
      * 如果在controller中使用两个并列的service，两个service的操作是独立的，并不是一个整体的事务
-     *  @param item item基本数据
-     * @param desc item对应的描述信息
+     *
+     * @param item       item基本数据
+     * @param desc       item对应的描述信息
      * @param itemParams
      */
     public void saveItem(Item item, String desc, String itemParams) {
@@ -61,6 +70,8 @@ public class ItemService extends BaseService<Item> {
         itemParamItem.setParamData(itemParams);
 
         this.itemParamItemService.save(itemParamItem);
+
+        sendMsg(item.getId(), "insert");
     }
 
     public PageInfo<Item> queryPageList(Integer page, Integer rows) {
@@ -97,10 +108,27 @@ public class ItemService extends BaseService<Item> {
 
         // 通知其他系统该商品已经更新，删除其他系统的缓存
         // 目前只通知前台系统
+        // try {
+        //     String url = "http://www.taotao.com:8002/item/cache/" + item.getId() + ".html";
+        //     this.apiService.doPost(url, null);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+
+        sendMsg(item.getId(), "update");
+
+    }
+
+    private void sendMsg(Long itemId, String type) {
+        // 发送MQ消息通知其他系统
         try {
-            String url = "http://www.taotao.com:8002/item/cache/" + item.getId() + ".html";
-            this.apiService.doPost(url, null);
-        } catch (IOException e) {
+            Map<String, Object> msg = new HashMap<>();
+            msg.put("itemId", itemId);
+            msg.put("type", "update");
+            msg.put("date", System.currentTimeMillis());
+
+            this.rabbitTemplate.convertAndSend("item." + type, OBJECT_MAPPER.writeValueAsString(msg));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
