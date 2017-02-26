@@ -1,10 +1,14 @@
 package lab.zlren.taotao.web.controller;
 
+import lab.zlren.taotao.web.bean.Cart;
 import lab.zlren.taotao.web.bean.Item;
 import lab.zlren.taotao.web.bean.Order;
+import lab.zlren.taotao.web.bean.User;
+import lab.zlren.taotao.web.service.CartService;
 import lab.zlren.taotao.web.service.ItemService;
 import lab.zlren.taotao.web.service.OrderService;
 import lab.zlren.taotao.web.service.UserService;
+import lab.zlren.taotao.web.threadlocal.UserThreadLocal;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +37,9 @@ public class OrderController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CartService cartService;
+
     /**
      * 去订单确认页
      *
@@ -44,6 +52,22 @@ public class OrderController {
         ModelAndView modelAndView = new ModelAndView("order");
         Item item = this.itemService.queryItemById(itemId);
         modelAndView.addObject("item", item);
+
+        return modelAndView;
+    }
+
+
+    /**
+     * 基于购物车下单
+     *
+     * @return
+     */
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    public ModelAndView toCartOrder() {
+        ModelAndView modelAndView = new ModelAndView("order-cart");
+        User user = UserThreadLocal.get();
+        List<Cart> cartList = this.cartService.queryCartListByUserId(user.getId());
+        modelAndView.addObject("carts", cartList);
 
         return modelAndView;
     }
